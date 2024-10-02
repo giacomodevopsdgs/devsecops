@@ -2,7 +2,6 @@ name: Test connection to the cluster
 
 on:
   workflow_dispatch:
-    
 jobs:
   release:
    runs-on: self-hosted
@@ -36,27 +35,20 @@ jobs:
     - name: Build and push Docker image
       uses: docker/build-push-action@v5
       with:
-        context: ./frontend
+        context: ./backend
         push: true
-        tags: ghcr.io/giacomodevopsdgs/demo_frontend:${{ env.COMMIT_HASH }}
+        tags: ghcr.io/giacomodevopsdgs/demo_backend:${{ env.COMMIT_HASH }}
 
     - name: Update Kubernetes deployment
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
       with:
-        args: set image deployment/frontend frontend=ghcr.io/giacomodevopsdgs/demo_frontend:${{ env.COMMIT_HASH }} --namespace=devsecops-demo --record
+        args: set image deployment/backend backend=ghcr.io/giacomodevopsdgs/demo_backend:${{ env.COMMIT_HASH }} --namespace=devsecops-demo --record
 
     - name: RollOut Kubernetes deployment
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
       with:
-        args: rollout restart deployment/frontend --namespace=devsecops-demo 
-  
-    # - name: Update Kubernetes deployment
-    #   uses: actions-hub/kubectl@master
-    #   env:
-    #     KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
-    #   with:
-    #     args: get pods
+        args: rollout restart deployment/backend --namespace=devsecops-demo 
