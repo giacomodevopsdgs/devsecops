@@ -17,7 +17,7 @@ jobs:
       #  certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
     - name: Update Kubernetes deployment
       uses: actions-hub/kubectl@master
-      env:
-        KUBE_CONFIG: ${{ env.KUBE_CONFIG }}
+      # env:
+      #   KUBE_CONFIG: ${{ env.KUBE_CONFIG }}
       with:
-        args: get pods
+        args: get ns
