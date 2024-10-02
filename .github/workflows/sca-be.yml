@@ -29,4 +29,4 @@ jobs:
       with:
         image: checkpoint/shiftleft:latest_v2
         options: -e CHKP_CLOUDGUARD_ID=${{ env.CG_API_KEY }} -e CHKP_CLOUDGUARD_SECRET=${{ env.CG_API_SECRET }} -e SHIFTLEFT_REGION=eu1 -v /tmp:/tmp
-        run: shiftleft image-scan -e ${{ env.ENVIRONMENT_ID }} -i /tmp/devsecops_checkpoint_latest.tar
+        run: shiftleft image-scan -e ${{ env.ENVIRONMENT_ID }} -i /tmp/backend:latest.tar
