@@ -1,4 +1,4 @@
-name: CloudGuard
+name: CloudGuard | IAC scan
 
 on:
   workflow_dispatch:
