@@ -22,7 +22,7 @@ jobs:
 
     - name: Update Kubernetes deployment
       uses: actions-hub/kubectl@master
-      env:
-        KUBE_CONFIG: ${{ env.KUBE_CONFIG }}
+      # env:
+      #   KUBE_CONFIG: ${{ env.KUBE_CONFIG }}
       with:
         args: get pods
