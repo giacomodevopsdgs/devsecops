@@ -11,10 +11,12 @@ jobs:
       with:
         url: https://conjur-cluster.lab
         account: dgsspa
-        host_id: host/github-apps
+        #host_id: host/github-apps
         api_key: ${{ secrets.CONJUR_API_KEY }}
         secrets: github-apps/KUBE_CONFIG1|KUBE_CONFIG;
         certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
+
+
     # - name: Update Kubernetes deployment
     #   uses: actions-hub/kubectl@master
     #   # env:
