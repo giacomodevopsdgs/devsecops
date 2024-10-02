@@ -32,8 +32,27 @@ jobs:
     - name: Set commit hash as environment variable
       run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
 
+    - name: Build and push Docker image
+      uses: docker/build-push-action@v5
+      with:
+        context: ./frontend
+        push: true
+        tags: ghcr.io/giacomodevopsdgs/demo_frontend:${{ env.COMMIT_HASH }}
 
+    - name: Update Kubernetes deployment
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
+      with:
+        args: set image deployment/frontend frontend=ghcr.io/giacomodevopsdgs/demo_frontend:${{ env.COMMIT_HASH }} --namespace=devsecops-demo --record
 
+    - name: Update Kubernetes deployment
+      uses: actions-hub/kubectl@master
+      env:
+        KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
+      with:
+        args: rollout restart deployment/frontend --namespace=devsecops-demo
+  
     # - name: Update Kubernetes deployment
     #   uses: actions-hub/kubectl@master
     #   env:
