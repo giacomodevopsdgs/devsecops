@@ -19,7 +19,8 @@ jobs:
         secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
         certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
     - name: Set commit hash as environment variable
-      run: env | grep    SPECTRAL_DSN  
+      run: env | grep    SPECTRAL_DSN   
+
   iac-scan:
     name: scan iac
     runs-on: ubuntu-latest
