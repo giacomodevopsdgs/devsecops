@@ -3,7 +3,7 @@ name: CloudGuard | IAC scan
 on:
   workflow_dispatch:
 jobs:
-  env-pull:
+  iac-scan:
    runs-on: self-hosted
    steps:
     - name: Checkout code
@@ -20,18 +20,11 @@ jobs:
         certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
     - name: Set commit hash as environment variable
       run: env 
-
-  # iac-scan:
-  #   name: scan iac
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - uses: actions/checkout@v2
     - name: Install and run Spectral CI
       uses: spectralops/spectral-github-action@v2
       with:
         spectral-dsn: ${{ secrets.URL }}
-        spectral-args: scan --ok
+        spectral-args: scan --engine oss,iac,secret
 
   # sca-scan:
   #   name: building image
