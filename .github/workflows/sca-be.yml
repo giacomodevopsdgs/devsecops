@@ -41,6 +41,8 @@ jobs:
         options: |
           -e CHKP_CLOUDGUARD_ID=${{ needs.get-vbs.outputs.CG_API_KEY }}
           -e CHKP_CLOUDGUARD_SECRET=${{ needs.get-vbs.outputs.CG_API_SECRET }}
+          -e ENVIRONMENT_ID=${{ needs.get-vbs.outputs.ENVIRONMENT_ID }}
+
           -e SHIFTLEFT_REGION=eu1
           -v /tmp:/tmp        
         run: shiftleft image-scan -e ${{ env.ENVIRONMENT_ID }} -i /tmp/backend:latest.tar
