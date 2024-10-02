@@ -3,21 +3,21 @@ name: CloudGuard | IAC scan
 on:
   workflow_dispatch:
 jobs:
-  env-pull:
-   runs-on: self-hosted
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+  # env-pull:
+  #  runs-on: self-hosted
+  #  steps:
+  #   - name: Checkout code
+  #     uses: actions/checkout@v2
 
-    - name: Import Secrets using CyberArk Conjur Secret Fetcher Action
-      uses: cyberark/conjur-action@v2.0.5
-      with:
-        url: https://conjur-cluster.lab
-        account: dgsspa
-        host_id: host/github-apps
-        api_key: ${{ secrets.CONJUR_API_KEY }}
-        secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
-        certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
+  #   - name: Import Secrets using CyberArk Conjur Secret Fetcher Action
+  #     uses: cyberark/conjur-action@v2.0.5
+  #     with:
+  #       url: https://conjur-cluster.lab
+  #       account: dgsspa
+  #       host_id: host/github-apps
+  #       api_key: ${{ secrets.CONJUR_API_KEY }}
+  #       secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
+  #       certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
   iac-scan:
     name: scan iac
     runs-on: ubuntu-latest
@@ -27,7 +27,7 @@ jobs:
     - name: Install and run Spectral CI
       uses: spectralops/spectral-github-action@v2
       with:
-        spectral-dsn: ${{ env.SPECTRAL_DSN }}
+        spectral-dsn: ${{ secrets.URL }}
         spectral-args: scan --ok
 
   # sca-scan:
