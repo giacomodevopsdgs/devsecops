@@ -1,4 +1,4 @@
-name: CloudGuard | IAC scan
+name: CloudGuard | Shift Left BE
 
 on:
   workflow_dispatch:
@@ -18,13 +18,16 @@ jobs:
         api_key: ${{ secrets.CONJUR_API_KEY }}
         secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
         certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
+    - name: Set secrets as outputs
+      run: |
+        echo "::set-output name=CG_API_KEY::$(echo ${{ env.CG_API_KEY }})"
+        echo "::set-output name=CG_API_SECRET::$(echo ${{ env.CG_API_SECRET }})"
+        echo "::set-output name=ENVIRONMENT_ID::$(echo ${{ env.ENVIRONMENT_ID }})"
 
   sca-scan:
     name: building image
     runs-on: ubuntu-latest
     steps:
-    - name: Set commit hash as environment variable
-      run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build Docker image
@@ -35,5 +38,9 @@ jobs:
       uses: addnab/docker-run-action@v3
       with:
         image: checkpoint/shiftleft:latest_v2
-        options: -e CHKP_CLOUDGUARD_ID=${{ env.CG_API_KEY }} -e CHKP_CLOUDGUARD_SECRET=${{ env.CG_API_SECRET }} -e SHIFTLEFT_REGION=eu1 -v /tmp:/tmp
+        options: |
+          -e CHKP_CLOUDGUARD_ID=${{ needs.get-vbs.outputs.CG_API_KEY }}
+          -e CHKP_CLOUDGUARD_SECRET=${{ needs.get-vbs.outputs.CG_API_SECRET }}
+          -e SHIFTLEFT_REGION=eu1
+          -v /tmp:/tmp        
         run: shiftleft image-scan -e ${{ env.ENVIRONMENT_ID }} -i /tmp/backend:latest.tar
