@@ -1,11 +1,3 @@
-env:
-    SYSDIG_SECURE_ENDPOINT: "https://eu1.app.sysdig.com"
-    REGISTRY_HOST: "quay.io"
-    IMAGE_NAME: "dgsspa/sysdig_test"
-    IMAGE_TAG: "tag" 
-    DOCKERFILE_CONTEXT: "./cicd"
-    REGISTRY_USER: "user"
-
 name: Test connection to the cluster
 
 on: [push]
