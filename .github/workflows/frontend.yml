@@ -46,7 +46,7 @@ jobs:
       with:
         args: set image deployment/frontend frontend=ghcr.io/giacomodevopsdgs/demo_frontend:${{ env.COMMIT_HASH }} --namespace=devsecops-demo --record
 
-    - name: Update Kubernetes deployment
+    - name: RollOut Kubernetes deployment
       uses: actions-hub/kubectl@master
       env:
         KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
