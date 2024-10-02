@@ -51,7 +51,7 @@ jobs:
       env:
         KUBE_CONFIG: ${{ env.KUBE_CONFIG }} #credo sia superfluo se lo prende dall'env
       with:
-        args: rollout restart deployment/frontend --namespace=devsecops-demo
+        args: rollout restart deployment/frontend --namespace=devsecops-demo 
   
     # - name: Update Kubernetes deployment
     #   uses: actions-hub/kubectl@master
