@@ -1,0 +1,32 @@
+name: CloudGuard | Shift Left FE
+
+on:
+  workflow_dispatch:
+jobs:
+  shify-left:
+   runs-on: self-hosted
+   steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
+    - name: Import Secrets using CyberArk Conjur Secret Fetcher Action
+      uses: cyberark/conjur-action@v2.0.5
+      with:
+        url: https://conjur-cluster.lab
+        account: dgsspa
+        host_id: host/github-apps
+        api_key: ${{ secrets.CONJUR_API_KEY }}
+        secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
+        certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
+    - name: Build Docker image
+      run: docker build -t frontend:latest ./frontend
+    - name: Save Docker image
+      run: docker save frontend:latest -o /tmp/frontend:latest.tar
+    - name: Run the ShiftLeft via docker
+      uses: addnab/docker-run-action@v3
+      with:
+        image: checkpoint/shiftleft:latest_v2
+        options: -e CHKP_CLOUDGUARD_ID=${{ env.CG_API_KEY }} -e CHKP_CLOUDGUARD_SECRET=${{ env.CG_API_SECRET }} -e SHIFTLEFT_REGION=eu1 -v /tmp:/tmp
+        run: shiftleft image-scan -e ${{ env.ENVIRONMENT_ID }} -i /tmp/frontend:latest.tar
