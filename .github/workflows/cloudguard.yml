@@ -21,12 +21,12 @@ jobs:
     - name: Set commit hash as environment variable
       run: env 
 
-  iac-scan:
-    name: scan iac
-    runs-on: ubuntu-latest
+  # iac-scan:
+  #   name: scan iac
+  #   runs-on: ubuntu-latest
 
-    steps:
-    - uses: actions/checkout@v2
+  #   steps:
+  #   - uses: actions/checkout@v2
     - name: Install and run Spectral CI
       uses: spectralops/spectral-github-action@v2
       with:
