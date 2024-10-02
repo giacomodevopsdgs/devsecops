@@ -1,0 +1,7 @@
+# conjur policy load -f grant-app-access.yaml -b root
+
+- !grant
+  roles:
+  - !group conjur/authn-jwt/dev-cluster/apps
+  members:
+  - !host  app-path/system:serviceaccount:devsecops-demo:devsecops-demo

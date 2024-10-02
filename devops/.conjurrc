@@ -1,0 +1,3 @@
+account: dgsspa
+appliance_url: https://conjur-cluster.lab
+cert_file: /root/conjur-server.pem

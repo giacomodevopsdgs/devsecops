@@ -1,0 +1,7 @@
+# conjur policy load -f test-app-eso.yml -b app-path
+
+- !host
+  id: system:serviceaccount:devsecops-demo:devsecops-demo
+  annotations:
+    authn-jwt/dev-cluster/kubernetes.io/namespace: devsecops-demo
+    authn-jwt/dev-cluster/kubernetes.io/serviceaccount/name: devsecops-demo

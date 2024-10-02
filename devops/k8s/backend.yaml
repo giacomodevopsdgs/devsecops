@@ -1,0 +1,56 @@
+#edit
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: devsecops-demo_be
+  name: backend
+  namespace: devsecops-demo
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: devsecops-demo_be
+  template:
+    metadata:
+      annotations:
+        conjur.org/container-mode: sidecar
+        conjur.org/secrets-refresh-enabled: "true"
+        conjur.org/secrets-refresh-interval: "10s"  # Quoted to ensure it's treated as a string
+      labels:
+        app: devsecops-demo_be
+    spec:
+      serviceAccountName: devsecops-demo
+      imagePullSecrets:
+        - name: ghcr-login-secret      
+      containers:
+      - name: backend
+        image: ghcr.io/giacomodevopsdgs/demo_backend:1.0.2
+        imagePullPolicy: Always
+        env:
+          - name: DATABASE_USER
+            valueFrom:
+              secretKeyRef:
+                name: conjur
+                key: user        
+          - name: DATABASE_PSW
+            valueFrom:
+              secretKeyRef:
+                name: conjur
+                key: psw
+          - name: DATABASE_URL
+            value: postgresql://$(DATABASE_USER):$(DATABASE_PSW)@devsecops-demo-db.cylp24eqo9yt.eu-central-1.rds.amazonaws.com:5432/devsecops_demo
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: backend
+  namespace: devsecops-demo  
+spec:
+  selector:
+    app: devsecops-demo_be
+  ports:
+    - protocol: TCP
+      port: 4000
+      targetPort: 4000
+  type: ClusterIP
