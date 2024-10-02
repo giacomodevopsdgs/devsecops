@@ -24,7 +24,7 @@ jobs:
       uses: spectralops/spectral-github-action@v2
       with:
         spectral-dsn: ${{ secrets.URL }}
-        spectral-args: scan --engine oss,iac,secret
+        spectral-args: scan --engines oss,iac,secret
 
   # sca-scan:
   #   name: building image
