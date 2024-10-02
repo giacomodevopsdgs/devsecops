@@ -18,9 +18,8 @@ jobs:
         api_key: ${{ secrets.CONJUR_API_KEY }}
         secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
         certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
-    steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    # - name: Checkout code
+    #   uses: actions/checkout@v2
     - name: Build Docker image
       run: docker build -t backend:latest ./backend
     - name: Save Docker image
