@@ -1,0 +1,65 @@
+# name: Example Workflow
+
+# on: [push]
+
+# jobs:
+#   test:
+#     runs-on: self-hosted
+    
+#     permissions:
+#       id-token: write
+#       contents: read
+
+#     steps:
+#       - name: Checkout repository
+#         uses: actions/checkout@v2
+#         with:
+#           submodules: true
+#           fetch-depth: 0
+
+#       - name: Print GitHub Actions Environment
+#         run: |
+#           echo "GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
+#           echo "ID_TOKEN: ${{ secrets.GITHUB_TOKEN }}"
+
+#       - name: Import Secrets using CyberArk Conjur Secret Fetcher
+#         id: fetch-secrets
+#         uses: cyberark/conjur-action@v2.0.2
+#         with:
+#           url: https://conjur-cluster.lab
+#           account: dgsspa
+#           authn_id: ${{ secrets.CONJUR_AUTHN_ID }}
+#           secrets: secrets/password|psw
+
+
+# # name: Example Workflow
+
+# # on: [push]
+
+# # jobs:
+# #   test:
+# #     runs-on: self-hosted
+    
+# #     permissions:
+# #       id-token: write
+# #       contents: read
+
+# #     steps:
+# #       - name: Checkout repository
+# #         uses: actions/checkout@v2
+# #         with:
+# #           submodules: true  # Fetch submodules
+# #           fetch-depth: 0    # Ensure the full history is fetched
+
+# #       - name: Import Secrets using CyberArk Conjur Secret Fetcher
+# #         id: fetch-secrets
+# #         uses: cyberark/conjur-action@v2.0.2
+# #         with:
+# #           url: https://conjur-cluster.lab/authn-jwt/github/dsgspa/github-apps
+# #           account: dgsspa
+# #           authn_id: authn-jwt/github
+# #           secrets: secrets/password|psw
+
+# #       - name: Set and Print Recovered Secrets
+# #         run: |
+# #           echo "Password: ${{ steps.fetch-secrets.outputs.psw }}"
