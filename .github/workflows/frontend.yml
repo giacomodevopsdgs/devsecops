@@ -1,8 +1,8 @@
-name: Test connection to the cluster
+name: Release FE
 
 on:
   workflow_dispatch:
-    
+
 jobs:
   release:
    runs-on: self-hosted
