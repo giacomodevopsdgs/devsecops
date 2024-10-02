@@ -14,7 +14,7 @@ jobs:
         #host_id: host/github-apps
         api_key: ${{ secrets.CONJUR_API_KEY }}
         secrets: github-apps/KUBE_CONFIG1|KUBE_CONFIG;
-        certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
+        #certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
 
 
     # - name: Update Kubernetes deployment
