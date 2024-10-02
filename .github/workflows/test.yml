@@ -6,12 +6,15 @@ jobs:
   release:
    runs-on: self-hosted
    steps:
+    - name: Checkout code
+      uses: actions/checkout@v2
+
     - name: Import Secrets using CyberArk Conjur Secret Fetcher Action
       uses: cyberark/conjur-action@v2.0.5
       with:
         url: https://conjur-cluster.lab
         account: dgsspa
-        host_id: github-apps
+        host_id: host/github-apps
         api_key: ${{ secrets.CONJUR_API_KEY }}
         secrets: github-apps/KUBE_CONFIG1|KUBE_CONFIG;
         certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
