@@ -1,4 +1,4 @@
-name: Test connection to the cluster
+name: Release BE
 
 on:
   workflow_dispatch:
