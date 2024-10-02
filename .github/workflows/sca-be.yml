@@ -31,7 +31,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
     - name: Build Docker image
-      run: docker build -t backend:latest .
+      run: docker build -t backend:latest ./backend
     - name: Save Docker image
       run: docker save backend:latest -o /tmp/backend:latest.tar
     - name: Run the ShiftLeft via docker
