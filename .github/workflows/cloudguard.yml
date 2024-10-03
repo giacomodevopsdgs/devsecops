@@ -25,7 +25,7 @@ jobs:
       with:
         spectral-dsn: ${{ secrets.URL }}
         # spectral-args: scan --engines oss,iac,secrets
-        spectral-args: scan --engines iac,secrets --ok ./backend
+        spectral-args: scan --engines iac,secrets --ok
 
   # sca-scan:
   #   name: building image
