@@ -1,0 +1,10 @@
+name: Test conjur cli
+
+on:
+  workflow_dispatch:
+jobs:
+  release:
+   runs-on: self-hosted
+   steps:
+    - name: Test conjur cli
+      run: conjur list
