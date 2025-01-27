@@ -44,4 +44,4 @@ jobs:
           BRANCH: ${{ github.event.pull_request.head.ref }}
 
       - name: Run Vulnerability Scanner
-        run:  s1-cns-cli scan vuln -d $PWD
+        run:  s1-cns-cli scan vuln -d $PWD --publish-result --repo-full-name $REPO_FULL_NAME  --repo-url $REPO_URL/$REPO_FULL_NAME --branch $BRANCH
