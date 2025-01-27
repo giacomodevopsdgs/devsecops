@@ -85,3 +85,16 @@ cd ..
 cd conjur/cloudguard/
 ls
 conjur policy load -f cg-secrets.yml -b root
+history | grep conjur
+cd /root/conjur
+ls
+cd ..
+ls
+cd conjur
+ls
+cd eso
+ls
+cd k8s-config/
+ls
+kubectl apply -f conjur-secret-store.yaml 
+kubectl apply -f conjur-external-secret.yaml 
