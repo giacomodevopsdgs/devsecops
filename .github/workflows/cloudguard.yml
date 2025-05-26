@@ -9,15 +9,15 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Import Secrets using CyberArk Conjur Secret Fetcher Action
-      uses: cyberark/conjur-action@v2.0.5
-      with:
-        url: https://conjur-cluster.lab
-        account: dgsspa
-        host_id: host/github-apps
-        api_key: ${{ secrets.CONJUR_API_KEY }}
-        secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
-        certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
+    # - name: Import Secrets using CyberArk Conjur Secret Fetcher Action
+    #   uses: cyberark/conjur-action@v2.0.5
+    #   with:
+    #     url: https://conjur-cluster.lab
+    #     account: dgsspa
+    #     host_id: host/github-apps
+    #     api_key: ${{ secrets.CONJUR_API_KEY }}
+    #     secrets: CG_API_KEY;CG_API_SECRET;ENVIRONMENT_ID;SPECTRAL_DSN;
+    #     certificate: ${{ secrets.CONJUR_CERTIFICATE }}    
     - name: Set commit hash as environment variable
       run: env 
     - name: Install and run Spectral CI
