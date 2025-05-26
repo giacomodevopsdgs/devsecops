@@ -12,9 +12,7 @@ jobs:
     - name: Install and run Spectral CI
       uses: spectralops/spectral-github-action@v2
       with:
-        spectral-dsn: https://spu-f1dda05296ed4ad2be5cf6820086c0de@spectral-eu.checkpoint.com
-        # ${{ secrets.SPECTRAL_DSN }}
-        # spectral-args: scan --engines oss,iac,secrets
+        spectral-dsn: https://spu-f1dda05296ed4ad2be5cf6820086c0de@spectral-eu.checkpoint
         spectral-args: scan --engines iac,secrets --ok
 
   # sca-scan:
