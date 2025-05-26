@@ -2,38 +2,17 @@ name: CloudGuard | IAC scan
 
 on:
   workflow_dispatch:
+
 jobs:
   iac-scan:
-   runs-on: self-hosted
-   steps:
-    - name: Checkout code
-      uses: actions/checkout@v2
+    runs-on: self-hosted
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v2
 
-    - name: Install and run Spectral CI
-      uses: spectralops/spectral-github-action@v2
-      env:
-        SPECTRAL_DSN: dsn://spu-ab55699b539a418cbcfc4259d393505e@spectral-eu.checkpoint.com
-      with:
-        spectral-args: scan --engines iac,secrets --ok
-
-  # sca-scan:
-  #   name: building image
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Set commit hash as environment variable
-  #     run: echo "COMMIT_HASH=$(git rev-parse --short HEAD)" >> $GITHUB_ENV
-  #   - name: Checkout code
-  #     uses: actions/checkout@v2
-  #   - name: Build Docker image
-  #     run: docker build -t ghcr.io/giacomodevopsdgs/devsecops_checkpoint:latest .
-  #   - name: Save Docker image
-  #     run: docker save ghcr.io/giacomodevopsdgs/devsecops_checkpoint:latest -o /tmp/devsecops_checkpoint_latest.tar
-  #   - name: list tmp
-  #     run: ls /tmp/
-  #   - name: Run the ShiftLeft via docker
-  #     uses: addnab/docker-run-action@v3
-  #     with:
-  #       image: checkpoint/shiftleft:latest_v2
-  #       options: -e CHKP_CLOUDGUARD_ID=${{ env.CG_API_KEY }} -e CHKP_CLOUDGUARD_SECRET=${{ env.CG_API_SECRET }} -e SHIFTLEFT_REGION=eu1 -v /tmp:/tmp
-  #       run: shiftleft image-scan -e ${{ env.ENVIRONMENT_ID }} -i /tmp/devsecops_checkpoint_latest.tar
+      - name: Install and run Spectral CI
+        uses: spectralops/spectral-github-action@v2
+        env:
+          SPECTRAL_DSN: dsn://spu-ab55699b539a418cbcfc4259d393505e@eu.api.spectralops.io
+        with:
+          spectral-args: scan --engines iac,secrets --ok
