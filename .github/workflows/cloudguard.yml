@@ -2,8 +2,10 @@ name: CloudGuard | IAC scan
 
 on:
   workflow_dispatch:
+
 env:
   SPECTRAL_DSN: ${{ secrets.SPECTRAL_DSN }}
+
 jobs:
   scan:
     runs-on: ubuntu-latest
