@@ -2,17 +2,15 @@ name: CloudGuard | IAC scan
 
 on:
   workflow_dispatch:
-
+env:
+  SPECTRAL_DSN: ${{ secrets.SPECTRAL_DSN }}
 jobs:
-  iac-scan:
-    runs-on: self-hosted
+  scan:
+    runs-on: ubuntu-latest
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
-
-      - name: Install and run Spectral CI
+    - uses: actions/checkout@v2
+    - name: Install and run Spectral CI
         uses: spectralops/spectral-github-action@v2
-        env:
-          SPECTRAL_DSN: dsn://spu-ab55699b539a418cbcfc4259d393505e@eu.api.spectralops.io
         with:
-          spectral-args: scan --engines iac,secrets --ok
+          spectral-dsn: ${{ env.SPECTRAL_DSN }}
+          spectral-args: scan --ok
